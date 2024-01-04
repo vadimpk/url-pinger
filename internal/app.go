@@ -7,6 +7,7 @@ import (
 
 	"github.com/vadimpk/url-pinger/config"
 	httpcontroller "github.com/vadimpk/url-pinger/internal/controller/http"
+	"github.com/vadimpk/url-pinger/internal/service"
 	"github.com/vadimpk/url-pinger/pkg/httpserver"
 	logging "github.com/vadimpk/url-pinger/pkg/logger"
 )
@@ -16,9 +17,24 @@ func Run(config *config.Config) {
 
 	logger.Info("Starting application", "config", config)
 
-	controller := httpcontroller.New(httpcontroller.Options{
+	serviceBaseOpts := service.BaseOptions{
 		Logger: logger,
 		Config: config,
+	}
+
+	pinger := service.NewCachePinger(serviceBaseOpts, nil)
+	pinger.SetNext(service.NewHTTPPinger(serviceBaseOpts))
+
+	urlValidator := service.NewURLValidator()
+
+	services := service.Services{
+		PingerService: service.NewPingerService(serviceBaseOpts, pinger, urlValidator),
+	}
+
+	controller := httpcontroller.New(httpcontroller.Options{
+		Logger:   logger,
+		Config:   config,
+		Services: services,
 	})
 
 	server := httpserver.New(

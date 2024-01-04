@@ -5,17 +5,20 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/vadimpk/url-pinger/config"
+	"github.com/vadimpk/url-pinger/internal/service"
 	logging "github.com/vadimpk/url-pinger/pkg/logger"
 )
 
 type Options struct {
-	Logger logging.Logger
-	Config *config.Config
+	Logger   logging.Logger
+	Config   *config.Config
+	Services service.Services
 }
 
 type routerContext struct {
-	logger logging.Logger
-	config *config.Config
+	logger  logging.Logger
+	config  *config.Config
+	service service.Services
 }
 
 type controller struct {
@@ -27,8 +30,9 @@ func New(opts Options) http.Handler {
 
 	c := &controller{
 		routerContext: routerContext{
-			logger: opts.Logger.Named("HTTPController"),
-			config: opts.Config,
+			logger:  opts.Logger.Named("HTTPController"),
+			config:  opts.Config,
+			service: opts.Services,
 		},
 	}
 

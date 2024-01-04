@@ -32,6 +32,10 @@ type (
 	Log struct {
 		Level string `env:"QC_LOG_LEVEL" env-default:"debug"`
 	}
+
+	PingerService struct {
+		DefaultPingTimeout time.Duration `env:"DEFAULT_PING_TIMEOUT" env-default:"5s"`
+	}
 )
 
 var (
