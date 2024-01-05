@@ -1,0 +1,11 @@
+services:
+  api:
+    env_file:
+      - .env
+    ports:
+      - ${HTTP_PORT}:${HTTP_PORT}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PORT: ${HTTP_PORT}
