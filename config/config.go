@@ -27,7 +27,7 @@ type (
 	}
 
 	Log struct {
-		Level string `env:"QC_LOG_LEVEL" env-default:"debug"`
+		Level string `env:"LOG_LEVEL" env-default:"debug"`
 	}
 
 	PingerService struct {
