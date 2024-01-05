@@ -34,15 +34,16 @@ type PingURLOptions struct {
 }
 
 type PingURLsResponse struct {
-	Results map[string]entity.URLStatus
+	Results           map[string]entity.URLStatus
+	AverageTimePerURL time.Duration
 }
 
 type URLValidator interface {
-	ValidateURL(url string) (bool, error)
+	ValidateURL(uri string) bool
 }
 
 type URLPinger interface {
-	Ping(ctx context.Context, url string, opts ...interface{}) (entity.URLStatus, error)
+	Ping(url string, opts ...interface{}) (entity.URLStatus, error)
 	SetNext(next URLPinger)
 }
 

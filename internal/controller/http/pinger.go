@@ -32,6 +32,7 @@ type pingURLsRequestBody struct {
 
 type pingURLsResponseBody struct {
 	Results map[string]entity.URLStatus `json:"results"`
+	Average int64                       `json:"average"`
 }
 
 func (c *pingerController) pingURLs(ctx *gin.Context) (interface{}, *httpResponseError) {
@@ -61,5 +62,6 @@ func (c *pingerController) pingURLs(ctx *gin.Context) (interface{}, *httpRespons
 
 	return pingURLsResponseBody{
 		Results: result.Results,
+		Average: result.AverageTimePerURL.Milliseconds(),
 	}, nil
 }
