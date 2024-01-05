@@ -4,7 +4,9 @@
 
 Simple REST API that can ping a list of URLs and return their status.
 
-The API is running concurrently, so it can ping multiple URLs at the same time. Also, there is a timeout for each request, so the API won't hang on a slow request, and the ability to stop the process if there is an error on any url. The response also includes the average time of pinging all urls.  
+The API is running concurrently, so it can ping multiple URLs at the same time. Also, there is a timeout for each
+request, so the API won't hang on a slow request, and the ability to stop the process if there is an error on any url.
+The response also includes the average time of pinging all urls.
 
 ### Usage
 
@@ -12,23 +14,33 @@ The API is running concurrently, so it can ping multiple URLs at the same time. 
 2. To run without docker, run `make run` in the root directory of the project.
 3. To run with docker, run `docker-compose up` in the root directory of the project.
 
-
 ### API
 
 #### POST /api/v1/ping-urls
-Parameters:
-- `urls` - list of URLs to ping
-  - type: `array`
-  - required: `true`
-- `return_on_err` - if `true`, the API will return the results as soon as it encounters an error. If `false`, the API will ping all URLs and return the results.
-  - type: `boolean`
-  - required: `false`
-  - default: `false`
-- `timeout` - timeout for each request in seconds
-  - type: `integer`
-  - required: `false`
-  - default: `5`
 
+Parameters:
+
+- `urls` - list of URLs to ping
+    - type: `array`
+    - required: `true`
+- `return_on_err` - if `true`, the API will return the results as soon as it encounters an error. If `false`, the API
+  will ping all URLs and return the results.
+    - type: `boolean`
+    - required: `false`
+    - default: `false`
+- `timeout` - timeout for each request in seconds
+    - type: `integer`
+    - required: `false`
+    - default: `5`
+
+Response:
+
+- `results` - map of URLs and their status
+    - type: `map`
+    - example: `{"http://example.com": "OK", "http://httpbin.org/get": "OK"}`
+- `average` - average time of pinging all URLs in milliseconds
+    - type: `integer`
+    - example: `241`
 
 ### Example
 
@@ -49,7 +61,7 @@ Response:
     "http://www.wikipedia.org": "OK",
     "https://cloudflare.com/cdn-cgi/trace": "OK"
   },
-  "average": 241 // in milliseconds
+  "average": 241
 }
 ```
 
