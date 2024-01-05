@@ -49,6 +49,10 @@ func (p *httpPinger) Ping(url string, opts ...interface{}) (entity.URLStatus, er
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode == http.StatusNotFound {
+		return entity.URLStatusNotFound, nil
+	}
+
 	if resp.StatusCode != http.StatusOK {
 		return entity.URLStatusError, nil
 	}

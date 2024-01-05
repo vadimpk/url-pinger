@@ -14,6 +14,12 @@ The response also includes the average time of pinging all urls.
 2. To run without docker, run `make run` in the root directory of the project.
 3. To run with docker, run `docker-compose up` in the root directory of the project.
 
+#### Tests
+
+```
+make test
+```
+
 ### API
 
 #### POST /api/v1/ping-urls
@@ -47,7 +53,7 @@ Response:
 Request:
 
 ```
-curl -X POST http://localhost:8080/api/v1/ping-urls -d '{"urls": ["http://httpbin.org/get", "http://example.com", "https://cloudflare.com/cdn-cgi/trace", "http://www.google.com", "http://www.wikipedia.org"],"return_on_err": false}'
+curl -X POST http://localhost:8080/api/v1/ping-urls -d '{"urls": ["http://httpbin.org/get", "http://example.com/404", "https://cloudflare.com/cdn-cgi/trace", "http://www.google.com", "http://www.wikipedia.org"],"return_on_err": false}'
 ```
 
 Response:
@@ -55,7 +61,7 @@ Response:
 ```json
 {
   "results": {
-    "http://example.com": "OK",
+    "http://example.com/404": "NOT_FOUND",
     "http://httpbin.org/get": "OK",
     "http://www.google.com": "OK",
     "http://www.wikipedia.org": "OK",

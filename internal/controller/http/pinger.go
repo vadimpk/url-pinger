@@ -60,6 +60,7 @@ func (c *pingerController) pingURLs(ctx *gin.Context) (interface{}, *httpRespons
 		}
 	}
 
+	logger.Info("pinged urls", "result", result)
 	return pingURLsResponseBody{
 		Results: result.Results,
 		Average: result.AverageTimePerURL.Milliseconds(),
