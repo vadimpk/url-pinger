@@ -20,7 +20,7 @@ func NewHTTPPinger(options BaseOptions) URLPinger {
 	}
 }
 
-func (p *httpPinger) Ping(ctx context.Context, url string) (entity.URLStatus, error) {
+func (p *httpPinger) Ping(ctx context.Context, url string, opts ...interface{}) (entity.URLStatus, error) {
 	return entity.URLStatusOK, nil
 }
 
@@ -44,7 +44,7 @@ func NewCachePinger(options BaseOptions, storage CacheStorage) URLPinger {
 	}
 }
 
-func (p *cachePinger) Ping(ctx context.Context, url string) (entity.URLStatus, error) {
+func (p *cachePinger) Ping(ctx context.Context, url string, opts ...interface{}) (entity.URLStatus, error) {
 	// TODO: add cache logic (for now just call the next pinger)
 
 	if p.Next != nil {

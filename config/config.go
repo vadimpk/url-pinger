@@ -13,13 +13,10 @@ type (
 		App  App
 		HTTP HTTP
 		Log  Log
+		Ping PingerService
 	}
 
 	App struct {
-		BaseURL     string `env:"QC_APP_BASE_URL"    env-default:"http://localhost:8080/api/v2"`
-		CheckoutURL string `env:"QC_CHECKOUT_URL"    env-default:"https://checkout.stag.qcpg.cc"`
-		AdminURL    string `env:"QC_ADMIN_URL"       env-default:"https://admin.stag.qcpg.cc"`
-		Env         string `env:"QC_APP_ENV"`
 	}
 
 	HTTP struct {
@@ -34,6 +31,7 @@ type (
 	}
 
 	PingerService struct {
+		WorkerPoolSize     int           `env:"WORKER_POOL_SIZE" env-default:"10"`
 		DefaultPingTimeout time.Duration `env:"DEFAULT_PING_TIMEOUT" env-default:"5s"`
 	}
 )

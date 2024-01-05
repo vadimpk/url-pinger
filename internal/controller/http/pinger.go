@@ -17,7 +17,7 @@ func (c *controller) setupPingerRoutes(rg *gin.RouterGroup) {
 		},
 	}
 
-	rg.GET("/ping-urls", c.methodWrapper(pinger.pingURLs))
+	rg.POST("/ping-urls", c.methodWrapper(pinger.pingURLs))
 }
 
 type pingerController struct {

@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"time"
 
 	"github.com/vadimpk/url-pinger/config"
 	"github.com/vadimpk/url-pinger/internal/entity"
@@ -41,8 +42,12 @@ type URLValidator interface {
 }
 
 type URLPinger interface {
-	Ping(ctx context.Context, url string) (entity.URLStatus, error)
+	Ping(ctx context.Context, url string, opts ...interface{}) (entity.URLStatus, error)
 	SetNext(next URLPinger)
+}
+
+type PingTimeoutOption struct {
+	Timeout time.Duration
 }
 
 type CacheStorage interface {
